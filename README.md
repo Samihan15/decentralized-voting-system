@@ -1,16 +1,14 @@
 # voting_dapp
 
-A new Flutter project.
+Voting dapp is a project created using Flutter framework and Solidity smart-contract as backend. The election process has three phases: registration phase, voting phase, and result phase. If one phase is started then we can not access other phases for example if registration phase is started then voting and result page is not available for performing operations.
 
-## Getting Started
+Registration Phase : Voter will register himself/herself and wait until admin verify the details of voter. Admin can add candidate in registration phase.        
+Voting phase : The verified voter will then able to vote one of the candidate.                                                                      
+Result Phase : Result will be published in result phase
 
-This project is a starting point for a Flutter application.
+## Project flow
 
-A few resources to get you started if this is your first Flutter project:
+Voter side application : 
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
