@@ -10,5 +10,14 @@ Result Phase : Result will be published in result phase
 
 Voter side application : 
 
+![Voter side application flow](https://github.com/Samihan15/decentralized-voting-system/blob/main/assets/voter.png)
 
 
+Admin side application : 
+
+![Admin panel flow](https://github.com/Samihan15/decentralized-voting-system/blob/main/assets/admin.png)
+
+## Technology used
+Flutter                                                                                                                                                                   
+Solidity                                                                                                                                                                     
+Firebase
