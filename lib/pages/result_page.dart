@@ -71,72 +71,87 @@ class _ResultPageState extends State<ResultPage> {
           title: const Text("Election Result"),
         ),
         body: phase == '2'
-            ? Container(
-                padding: const EdgeInsets.all(10),
-                width: double.infinity,
-                child: Column(
-                  children: [
-                    Card(
-                      child: Column(
-                        children: [
-                          const Text(
-                            "👑👑Winner👑👑",
-                            style: TextStyle(
-                                fontSize: 35, fontStyle: FontStyle.italic),
-                          ),
-                          Text(
-                            isLoading ? 'Loading...' : winner ?? "N/A",
-                            style: const TextStyle(
-                                fontSize: 25, fontStyle: FontStyle.italic),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 50,
-                    ),
-                    Expanded(
-                      child: isLoading
-                          ? Center(child: CircularProgressIndicator())
-                          : ListView.builder(
-                              itemCount: candidates.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                Map<String, dynamic> candidateData =
-                                    candidates.isNotEmpty
-                                        ? candidates[index]
-                                        : {};
-                                String name = candidateData['name'] ?? "N/A";
-                                String party = candidateData['party'] ?? "N/A";
-                                int age = candidateData['age'].toInt() ?? 0;
-                                int voteCount =
-                                    candidateData['voteCount'].toInt() ?? 0;
-
-                                return ListTile(
-                                  style: ListTileStyle.list,
-                                  title: Text(
-                                    "Candidate Name: $name",
-                                    style: const TextStyle(fontSize: 19),
-                                  ),
-                                  subtitle: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text("Votes: $voteCount"),
-                                      Text("Party: $party")
-                                    ],
-                                  ),
-                                );
-                              },
+            ? RefreshIndicator(
+                onRefresh: () async {
+                  await Future.delayed(const Duration(seconds: 3));
+                  await getCurrentPhase(ethClient);
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  width: double.infinity,
+                  child: Column(
+                    children: [
+                      Card(
+                        child: Column(
+                          children: [
+                            const Text(
+                              "👑👑Winner👑👑",
+                              style: TextStyle(
+                                  fontSize: 35, fontStyle: FontStyle.italic),
                             ),
-                    ),
-                  ],
+                            Text(
+                              isLoading ? 'Loading...' : winner ?? "N/A",
+                              style: const TextStyle(
+                                  fontSize: 25, fontStyle: FontStyle.italic),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      Expanded(
+                        child: isLoading
+                            ? Center(child: CircularProgressIndicator())
+                            : ListView.builder(
+                                itemCount: candidates.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  Map<String, dynamic> candidateData =
+                                      candidates.isNotEmpty
+                                          ? candidates[index]
+                                          : {};
+                                  String name = candidateData['name'] ?? "N/A";
+                                  String party =
+                                      candidateData['party'] ?? "N/A";
+                                  int age = candidateData['age'].toInt() ?? 0;
+                                  int voteCount =
+                                      candidateData['voteCount'].toInt() ?? 0;
+
+                                  return ListTile(
+                                    style: ListTileStyle.list,
+                                    title: Text(
+                                      "Candidate Name: $name",
+                                      style: const TextStyle(fontSize: 19),
+                                    ),
+                                    subtitle: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text("Votes: $voteCount"),
+                                        Text("Party: $party")
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                      ),
+                    ],
+                  ),
                 ),
               )
-            : const Center(
-                child: Text(
-                  'Result is not published yet',
-                  style: TextStyle(fontSize: 20, color: Colors.white),
-                ),
+            : RefreshIndicator(
+                onRefresh: () async {
+                  await Future.delayed(const Duration(seconds: 2));
+                  await getCurrentPhase(ethClient);
+                },
+                child: ListView(children: const [
+                  Center(
+                    child: Text(
+                      'Result is not published yet',
+                      style: TextStyle(fontSize: 20, color: Colors.white),
+                    ),
+                  ),
+                ]),
               ),
         drawer: const MyDrawer(),
       ),

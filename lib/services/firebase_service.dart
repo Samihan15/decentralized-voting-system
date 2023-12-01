@@ -89,4 +89,5 @@ Future<void> logout() async {
   final auth = FirebaseAuth.instance;
   await auth.signOut();
   await SharedPref().removeData();
+  
 }
